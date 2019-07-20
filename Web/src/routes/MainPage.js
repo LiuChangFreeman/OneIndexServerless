@@ -2,25 +2,25 @@ import React, { PureComponent } from 'react';
 import { connect } from 'dva';
 import {
   Row, Col, Spin,List,Icon,
-  Skeleton,
   LocaleProvider,Breadcrumb
 } from 'antd'
 import InfiniteScroll from 'react-infinite-scroller';
 import {Link} from 'dva/router';
-import {renderTime} from '../utils/uitls'
+import {renderTime,renderSize} from '../utils/uitls'
 import zhCN from 'antd/lib/locale-provider/zh_CN';
 
 @connect(({ util}) => ({
   util,
 }))
 class MainPage extends PureComponent {
+
   handleInfiniteOnLoad = async () => {
-    console.log("more");
     const{dispatch}=this.props;
     await dispatch({
       type:'util/fetchNext'
     })
   };
+
   render() {
     const {data,paths,current,loading,next,host}=this.props.util;
     return (
@@ -36,11 +36,12 @@ class MainPage extends PureComponent {
               <Breadcrumb.Item >
                 <Link to='/?path='>
                   <Icon type="home" />
+                   主页
                 </Link>
               </Breadcrumb.Item>
               {paths.map((item,index)=>{
                   return <Breadcrumb.Item key={index}>
-                    <Link to={`/?path=${item.path}`}>{item.name}</Link>
+                    <Link to={`/?path=${encodeURI(item.path)}`}>{item.name}</Link>
                   </Breadcrumb.Item>
               })}
             </Breadcrumb>
@@ -93,7 +94,7 @@ class MainPage extends PureComponent {
                             />
                             {
                               item.type === "folder" ? (
-                                current? <Link to={`/?path=${current}/${item.name}`}>{item.name}</Link>:
+                                current? <Link to={`/?path=${encodeURI(current)}/${encodeURI(item.name)}`}>{item.name}</Link>:
                                   <Link to={`/?path=${item.name}`}>{item.name}</Link>
                               ) : (
                                 <a href={`${host}/download?id=${item.id}`} target="_blank"  rel="noopener noreferrer">
@@ -119,7 +120,7 @@ class MainPage extends PureComponent {
                                 verticalAlign:'middle',
                                 display:'table-cell'
                               }}>
-                              {item.size}
+                              {renderSize(item.size)}
                             </div>
                           </Col>
                         </Row>
@@ -139,7 +140,6 @@ class MainPage extends PureComponent {
                 </List>
               </InfiniteScroll>
             </Col>
-
           </Row>
         </div>
       </LocaleProvider>
