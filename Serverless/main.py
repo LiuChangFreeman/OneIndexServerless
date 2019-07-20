@@ -51,7 +51,7 @@ def handler(environ, start_response):
 
 @app.route('/')
 def home():
-    if token==None:
+    if token==None or "account" not in token:
         data = {
             "success":False,
             "oss_available":oss_available
@@ -108,7 +108,10 @@ def authorized():
             "Content-Type": "application/json"
         }
         me = requests.get(url, headers=headers).json()
-        token["account"]=me["owner"]["user"]["email"]
+        try:
+            token["account"]=me["owner"]["user"]["email"]
+        except:
+            token["account"] = me["owner"]["user"]["displayName"]
         token["drive"] = me["id"]
         json_token = json.dumps(token, ensure_ascii=False, indent=4)
         path_token = os.path.join(path_oss_store, filename_token)
