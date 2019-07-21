@@ -16,3 +16,5 @@
 * 将函数计算的http触发器url填写到config.json中
 * 使用任意一种部署静态资源的方法将index.html和config.json部署到网络上
 * 在浏览器中访问index.html，并在后台登录您的OneDrive账号
+
+详细教程请参考[部署教程](https://zhuanlan.zhihu.com/p/74538287)
