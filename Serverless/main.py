@@ -119,7 +119,8 @@ def authorized():
         bucket.put_object_acl(path_token,oss2.OBJECT_ACL_PRIVATE)
         return redirect(final)
     except Exception as e:
-        return e.message
+        result={"error":e.message,"token":token,"code":code,"final":final}
+        return json.dumps(result)
 
 @app.route('/list', methods = ["GET","POST"])
 def list():
