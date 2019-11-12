@@ -4,7 +4,7 @@ import {
   Menu, Timeline, Layout, Row,Comment,Avatar,
   Icon, LocaleProvider,Button
 } from 'antd'
-import {getStatus, getHost} from '../services/service'
+import {getStatus} from '../services/service'
 import zhCN from 'antd/lib/locale-provider/zh_CN';
 const { Content,Sider } = Layout;
 
@@ -25,7 +25,6 @@ class ManagePage extends PureComponent {
     if(util.login===false){
       history.push('/admin');
     }
-    console.log(util);
     this.getStatus();
   }
 

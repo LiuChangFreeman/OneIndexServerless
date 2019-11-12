@@ -36,7 +36,7 @@ class MainPage extends PureComponent {
               <Breadcrumb.Item >
                 <Link to='/?path='>
                   <Icon type="home" />
-                   主页
+                  &nbsp;主页
                 </Link>
               </Breadcrumb.Item>
               {paths.map((item,index)=>{

@@ -87,7 +87,8 @@ export default {
         response=yield call(getListByPath,host,path.path);
       }
       if("error" in response){
-        message.error(response["data"]["error"]["message"],2);
+        const info=response["data"]["error"]["message"];
+        message.error(`OneDrive服务器错误:${info}`,3);
         let result={};
         result["next"]=null;
         result["data"]=[];
@@ -117,14 +118,8 @@ export default {
       const data = yield select(state => state.util.data);
       const response=yield call(getListByNext,host,next);
       if("error" in response){
-        message.error(response["data"]["error"]["message"],2);
-        let result={};
-        result["next"]=null;
-        result["data"]=[];
-        yield put({
-          type: 'setDataAndNext',
-          payload: result,
-        });
+        const info=response["data"]["error"]["message"];
+        message.error(`OneDrive服务器错误:${info}`,3);
       }else{
         let result={};
         result["next"]=response["next"];
