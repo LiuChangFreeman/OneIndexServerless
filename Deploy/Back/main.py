@@ -37,7 +37,7 @@ redirect_uri_final = '{}/login/authorized'.format(url_host.strip("/"))
 auth = oss2.Auth(access_key,access_key_secret)
 bucket = oss2.Bucket(auth, oss_end_point, oss_bucket_name)
 base_url='https://graph.microsoft.com/v1.0/'
-scopes= "offline_access files.readwrite.all"
+scopes= "offline_access files.read.all"
 select="id,name,size,folder,image,video,lastModifiedDateTime"
 
 token=None
