@@ -84,7 +84,7 @@ def login():
     code=base64.b64decode(code).decode("utf-8")
     final=request.args.get("final")
     if code==password:
-        url_login="https://login.microsoftonline.com/common/oauth2/v2.0/authorize?client_id={}&scope={}&response_type=code&redirect_uri={}&state={}".format(client_id, urllib.quote(scopes), redirect_uri_register, redirect_uri_final+"*"+final)
+        url_login="https://login.microsoftonline.com/common/oauth2/v2.0/authorize?client_id={}&scope={}&response_type=code&redirect_uri={}&state={}".format(client_id, urllib.parse.quote(scopes), redirect_uri_register, redirect_uri_final+"*"+final)
         return redirect(url_login)
 
 @app.route('/login/authorized')
@@ -223,7 +223,7 @@ def before(*args,**kwargs):
 def init():
     global token,oss_available
     try:
-        service = oss2.Service(auth, oss_end_point.replace("http://", ""), connect_timeout=0.5)
+        service = oss2.Service(auth, oss_end_point.replace("http://", ""), connect_timeout=1)
         service.list_buckets()
         oss_available=True
         path_token ="{}/{}".format(path_oss_store,filename_token)
