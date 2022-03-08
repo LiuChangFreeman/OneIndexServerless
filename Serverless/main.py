@@ -67,7 +67,7 @@ def home():
 @app.route('/verify')
 def verify():
     code=request.args.get("code")
-    code=base64.b64decode(code)
+    code=base64.b64decode(code).decode("utf-8")
     if code==password:
         data={
             "success":True
@@ -81,7 +81,7 @@ def verify():
 @app.route('/login')
 def login():
     code=request.args.get("code")
-    code=base64.b64decode(code)
+    code=base64.b64decode(code).decode("utf-8")
     final=request.args.get("final")
     if code==password:
         url_login="https://login.microsoftonline.com/common/oauth2/v2.0/authorize?client_id={}&scope={}&response_type=code&redirect_uri={}&state={}".format(client_id, urllib.quote(scopes), redirect_uri_register, redirect_uri_final+"*"+final)
